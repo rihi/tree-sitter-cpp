@@ -1026,7 +1026,7 @@ module.exports = grammar(C, {
       $.parameter_pack_expansion,
       $.this,
       $.user_defined_literal,
-      $.fold_expression,
+      // $.fold_expression,
       $.reflect_expression,
       $.splice_expression,
     ),
@@ -1152,7 +1152,7 @@ module.exports = grammar(C, {
       $.true,
       $.false,
       $._class_name,
-      $.fold_expression,
+      // $.fold_expression,
       $.lambda_expression,
       $.requires_expression,
 
@@ -1292,15 +1292,15 @@ module.exports = grammar(C, {
       field('right', $.expression),
     ),
 
-    fold_expression: $ => seq(
-      '(',
-      choice(
-        $._unary_right_fold,
-        $._unary_left_fold,
-        $._binary_fold,
-      ),
-      ')',
-    ),
+    // fold_expression: $ => prec(PREC.ASSIGNMENT - 1, seq(
+    //   '(',
+    //   choice(
+    //     $._unary_right_fold,
+    //     $._unary_left_fold,
+    //     $._binary_fold,
+    //   ),
+    //   ')',
+    // )),
 
     parameter_pack_expansion: $ => prec(-1, seq(
       field('pattern', $.expression),
@@ -1447,27 +1447,27 @@ module.exports = grammar(C, {
       field('right', choice($.expression, $.initializer_list)),
     )),
 
-    _assignment_expression_lhs: $ => seq(
-      field('left', $.expression),
-      field('operator', choice(...ASSIGNMENT_OPERATORS)),
-      field('right', choice($.expression, $.initializer_list)),
-    ),
-
-    // This prevents an ambiguity between fold expressions
-    // and assignment expressions within parentheses.
-    parenthesized_expression: ($, original) => choice(
-      original,
-      seq('(', alias($._assignment_expression_lhs, $.assignment_expression), ')'),
-    ),
-
-    comma_expression: ($, original) => choice(
-      original,
-      seq(
-        field('left', alias($._assignment_expression_lhs, $.assignment_expression)),
-        ',',
-        field('right', choice($.expression, $.comma_expression)),
-      ),
-    ),
+    // _assignment_expression_lhs: $ => prec(PREC.ASSIGNMENT - 1, seq(
+    //   field('left', $.expression),
+    //   field('operator', choice(...ASSIGNMENT_OPERATORS)),
+    //   field('right', choice($.expression, $.initializer_list)),
+    // )),
+    //
+    // // This prevents an ambiguity between fold expressions
+    // // and assignment expressions within parentheses.
+    // parenthesized_expression: ($, original) => choice(
+    //   original,
+    //   seq('(', alias($._assignment_expression_lhs, $.assignment_expression), ')'),
+    // ),
+    //
+    // comma_expression: ($, original) => choice(
+    //   original,
+    //   seq(
+    //     field('left', alias($._assignment_expression_lhs, $.assignment_expression)),
+    //     ',',
+    //     field('right', choice($.expression, $.comma_expression)),
+    //   ),
+    // ),
 
     reflect_expression: $ => prec.right(seq(
       '^^',
