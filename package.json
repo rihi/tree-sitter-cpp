@@ -2,12 +2,12 @@
   "name": "tree-sitter-cpp",
   "version": "0.23.4",
   "description": "C++ grammar for tree-sitter",
-  "repository": "https://github.com/tree-sitter/tree-sitter-cpp",
-  "license": "MIT",
-  "author": {
-    "name": "Max Brunsfeld",
-    "email": "maxbrunsfeld@gmail.com"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tree-sitter/tree-sitter-cpp.git"
   },
+  "license": "MIT",
+  "author": "Max Brunsfeld <maxbrunsfeld@gmail.com>",
   "maintainers": [
     {
       "name": "Amaan Qureshi",
@@ -57,5 +57,14 @@
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
     "test": "node --test bindings/node/*_test.js"
-  }
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tree-sitter/tree-sitter-cpp/issues"
+  },
+  "homepage": "https://github.com/tree-sitter/tree-sitter-cpp#readme"
 }

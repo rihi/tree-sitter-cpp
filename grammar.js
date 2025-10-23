@@ -1460,6 +1460,15 @@ module.exports = grammar(C, {
       seq('(', alias($._assignment_expression_lhs, $.assignment_expression), ')'),
     ),
 
+    comma_expression: ($, original) => choice(
+      original,
+      seq(
+        field('left', alias($._assignment_expression_lhs, $.assignment_expression)),
+        ',',
+        field('right', choice($.expression, $.comma_expression)),
+      ),
+    ),
+
     reflect_expression: $ => prec.right(seq(
       '^^',
       choice(
