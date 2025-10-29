@@ -505,6 +505,37 @@ module.exports = grammar(C, {
       $.variadic_declarator,
     ),
 
+    pointer_declarator: $ => prec.dynamic(1, prec.right(seq(
+      optional($.ms_based_modifier),
+      '*',
+      repeat($.ms_pointer_modifier),
+      repeat($.type_qualifier),
+      optional($.ms_call_modifier),
+      field('declarator', $._declarator),
+    ))),
+    pointer_field_declarator: $ => prec.dynamic(1, prec.right(seq(
+      optional($.ms_based_modifier),
+      '*',
+      repeat($.ms_pointer_modifier),
+      repeat($.type_qualifier),
+      optional($.ms_call_modifier),
+      field('declarator', $._field_declarator),
+    ))),
+    pointer_type_declarator: $ => prec.dynamic(1, prec.right(seq(
+      optional($.ms_based_modifier),
+      '*',
+      repeat($.ms_pointer_modifier),
+      repeat($.type_qualifier),
+      optional($.ms_call_modifier),
+      field('declarator', $._type_declarator),
+    ))),
+    abstract_pointer_declarator: $ => prec.dynamic(1, prec.right(seq('*',
+      repeat($.ms_pointer_modifier),
+      repeat($.type_qualifier),
+      optional($.ms_call_modifier),
+      field('declarator', optional($._abstract_declarator)),
+    ))),
+
     init_declarator: ($, original) => choice(
       original,
       seq(
